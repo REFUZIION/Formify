@@ -14,6 +14,7 @@ class Form
      * @var Field[]|Textarea[]|Select[]|Button[]|CheckboxGroup[]|RadioGroup[]
      */
     private array $fields;
+    private string $csrfToken = '';
 
     /**
      * @param array $config
@@ -24,6 +25,16 @@ class Form
         $this->method = isset($config['method']) ? strtoupper($config['method']) : 'POST';
         $this->enctype = $config['enctype'] ?? 'multipart/form-data';
         $this->fields = [];
+    }
+
+    /**
+     * @param string $token
+     * @return self
+     */
+    public function csrf(string $token): self
+    {
+        $this->csrfToken = $token;
+        return $this;
     }
 
     /**
@@ -108,6 +119,14 @@ class Form
 
             foreach ($attributes as $name => $value) {
                 $html->setAttribute($name, $value);
+            }
+
+            if (empty($this->csrfToken) === false) {
+                $csrfInput = $doc->createElement('input');
+                $csrfInput->setAttribute('type', 'hidden');
+                $csrfInput->setAttribute('name', '_token');
+                $csrfInput->setAttribute('value', $this->csrfToken);
+                $html->appendChild($csrfInput);
             }
 
             foreach ($this->fields as $field) {

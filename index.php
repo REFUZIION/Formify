@@ -11,6 +11,7 @@ $config = [
 ];
 
 $form = new Form($config);
+$form->csrf('abc123token');
 
 $form->field()
      ->name('emailAddress')
