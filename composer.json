@@ -1,6 +1,6 @@
 {
-    "name": "polarnix/formify",
-    "description": "A simple library for generating HTML5 forms",
+    "name": "fuziion/formify",
+    "description": "A simple library for generating high quality HTML5 forms, forked from polarnix/formify",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -12,6 +12,10 @@
         {
             "name": "polarnix",
             "email": "polarnix@pm.me"
+        },
+        {
+            "name": "fuziion_dev",
+            "email": "info@fuziion.nl"
         }
     ],
     "require": {
