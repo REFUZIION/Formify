@@ -11,6 +11,7 @@ $config = [
 ];
 
 $form = new Form($config);
+$form->csrf('abc123token');
 
 $form->field()
      ->name('emailAddress')
@@ -18,6 +19,10 @@ $form->field()
      ->placeholder('Enter your e-mail')
      ->style('border border-blue-100') // tailwindcss classes work here!
      ->value('example@gmail.com');
+
+$fieldset = $form->fieldset()->legend('Personal Information');
+$fieldset->field()->name('firstName')->type('text')->placeholder('First name');
+$fieldset->field()->name('lastName')->type('text')->placeholder('Last name');
 
 $form->field()
      ->name('fullName')
@@ -28,8 +33,42 @@ $form->field()
 
 $form->field()->name('randomFieldTest');
 
-$form->field()
-    ->type('submit')
-    ->value('submit');
+$form->textarea()
+     ->name('message')
+     ->placeholder('Enter your message')
+     ->rows(6)
+     ->cols(40)
+     ->style('border border-gray-300')
+     ->content('Hello, world!');
 
+$form->select()
+     ->name('country')
+     ->style('border border-gray-300')
+     ->options([
+         'us' => 'United States',
+         'nl' => 'Netherlands',
+         'de' => 'Germany',
+         'fr' => 'France',
+     ]);
+
+$form->checkbox('interests', [
+    'coding' => 'Coding',
+    'design' => 'Design',
+    'music' => 'Music',
+]);
+
+$form->radio('gender', [
+    'male' => 'Male',
+    'female' => 'Female',
+    'other' => 'Other',
+]);
+
+$form->button('Send')
+     ->style('bg-blue-500 text-white px-4 py-2 rounded');
+
+// Capture the form HTML as a string using toHtml()
+$formHtml = $form->toHtml();
+echo $formHtml;
+
+// render() still works — echoes directly
 $form->render();
