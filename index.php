@@ -20,6 +20,10 @@ $form->field()
      ->style('border border-blue-100') // tailwindcss classes work here!
      ->value('example@gmail.com');
 
+$fieldset = $form->fieldset()->legend('Personal Information');
+$fieldset->field()->name('firstName')->type('text')->placeholder('First name');
+$fieldset->field()->name('lastName')->type('text')->placeholder('Last name');
+
 $form->field()
      ->name('fullName')
      ->type('text')

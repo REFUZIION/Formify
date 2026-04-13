@@ -11,7 +11,7 @@ class Form
     private string $method;
     private string $enctype;
     /**
-     * @var Field[]|Textarea[]|Select[]|Button[]|CheckboxGroup[]|RadioGroup[]
+     * @var Fieldset[]|Field[]|Textarea[]|Select[]|Button[]|CheckboxGroup[]|RadioGroup[]
      */
     private array $fields;
     private string $csrfToken = '';
@@ -145,6 +145,16 @@ class Form
         catch (\DOMException|\Exception $e) {
             return '';
         }
+    }
+
+    /**
+     * @return Fieldset
+     */
+    public function fieldset(): Fieldset
+    {
+        $fieldset = new Fieldset;
+        $this->fields[] = $fieldset;
+        return $fieldset;
     }
 
     /**
