@@ -62,4 +62,9 @@ $form->radio('gender', [
 $form->button('Send')
      ->style('bg-blue-500 text-white px-4 py-2 rounded');
 
+// Capture the form HTML as a string using toHtml()
+$formHtml = $form->toHtml();
+echo $formHtml;
+
+// render() still works — echoes directly
 $form->render();

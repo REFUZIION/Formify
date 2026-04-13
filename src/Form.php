@@ -103,9 +103,9 @@ class Form
     }
 
     /**
-     * @return void
+     * @return string
      */
-    public function render(): void 
+    public function toHtml(): string
     {
         try {
             $doc = new DOMDocument();
@@ -140,10 +140,18 @@ class Form
             }
 
             $doc->appendChild($html);
-            echo $doc->saveHTML();
-        } 
-        catch (\DOMException|\Exception $e) {
-            echo sprintf('An error occurred while rendering the form: %s', $e->getMessage());
+            return $doc->saveHTML();
         }
+        catch (\DOMException|\Exception $e) {
+            return '';
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function render(): void 
+    {
+        echo $this->toHtml();
     }
 }
