@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace Formify;
 
@@ -9,8 +10,14 @@ class Form
     private string $action;
     private string $method;
     private string $enctype;
+    /**
+     * @var Field[]
+     */
     private array $fields;
 
+    /**
+     * @param array $config
+     */
     public function __construct(array $config = []) 
     {
         $this->action = $config['action'] ?? '';
@@ -19,6 +26,9 @@ class Form
         $this->fields = [];
     }
 
+    /**
+     * @return Field
+     */
     public function field(): Field 
     {
         $field = new Field;
@@ -26,6 +36,9 @@ class Form
         return $field;
     }
 
+    /**
+     * @return void
+     */
     public function render(): void 
     {
         try {
@@ -44,7 +57,7 @@ class Form
 
             foreach ($this->fields as $field) {
                 $input = $field->render();
-                if ($field === null) {
+                if ($input === null) {
                     continue;
                 }
 
@@ -56,7 +69,7 @@ class Form
             echo $doc->saveHTML();
         } 
         catch (\DOMException|\Exception $e) {
-            echo "An error occurred while rendering the form: " . $e->getMessage();
+            echo sprintf('An error occurred while rendering the form: %s', $e->getMessage());
         }
     }
 }

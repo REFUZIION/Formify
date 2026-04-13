@@ -1,8 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace Formify;
 
 use DOMDocument;
+use DOMElement;
+use DOMException;
+use Exception;
 
 class Field
 {
@@ -12,46 +16,72 @@ class Field
     private string $value;
     private string $placeholder;
 
-    public function __construct(array $attr = [])
+    /**
+     * @param array $attributes
+     */
+    public function __construct(array $attributes = [])
     {
-        $this->name = $attr['name'] ?? '';
-        $this->placeholder = $attr['placeholder'] ?? '';
-        $this->type = $attr['type'] ?? 'text';
-        $this->style = $attr['class'] ?? '';
-        $this->value = $attr['value'] ?? '';
+        $this->name = $attributes['name'] ?? '';
+        $this->placeholder = $attributes['placeholder'] ?? '';
+        $this->type = $attributes['type'] ?? 'text';
+        $this->style = $attributes['class'] ?? '';
+        $this->value = $attributes['value'] ?? '';
     }
 
-    public function name(string $name): self
+    /**
+     * @param string $name
+     * @return Field
+     */
+    public function name(string $name): Field
     {
         $this->name = $name;
         return $this;
     }
 
-    public function placeholder(string $placeholder): self
+    /**
+     * @param string $placeholder
+     * @return Field
+     */
+    public function placeholder(string $placeholder): Field
     {
         $this->placeholder = $placeholder;
         return $this;
     }
 
-    public function type(string $type): self
+    /**
+     * @param string $type
+     * @return Field
+     */
+    public function type(string $type): Field
     {
         $this->type = $type;
         return $this;
     }
 
-    public function style(string $style): self
+    /**
+     * @param string $style
+     * @return Field
+     */
+    public function style(string $style): Field
     {
         $this->style = $style;
         return $this;
     }
 
-    public function value(string $value): self
+    /**
+     * @param string $value
+     * @return Field
+     */
+    public function value(string $value): Field
     {
         $this->value = $value;
         return $this;
     }
 
-    public function render(): mixed
+    /**
+     * @return DOMElement|null
+     */
+    public function render(): ?DOMElement
     {
         try {
             $doc = new DOMDocument();
@@ -74,8 +104,11 @@ class Field
             $doc->appendChild($input_elm);
             return $doc->documentElement;
         }
-        catch (\DOMException|\Exception $e) {
-            echo "An error occurred while rendering the field: " . $e->getMessage();
+        catch (DOMException|Exception $e) {
+            echo sprintf(
+                'An error occurred while rendering the field: %s',
+                $e->getMessage()
+            );
             return null;
         }
     }
