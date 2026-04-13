@@ -11,7 +11,7 @@ class Form
     private string $method;
     private string $enctype;
     /**
-     * @var Field[]
+     * @var Field[]|Textarea[]|Select[]|Button[]|CheckboxGroup[]|RadioGroup[]
      */
     private array $fields;
 
@@ -34,6 +34,61 @@ class Form
         $field = new Field;
         $this->fields[] = $field;
         return $field;
+    }
+
+    /**
+     * @return Textarea
+     */
+    public function textarea(): Textarea
+    {
+        $textarea = new Textarea;
+        $this->fields[] = $textarea;
+        return $textarea;
+    }
+
+    /**
+     * @return Select
+     */
+    public function select(): Select
+    {
+        $select = new Select;
+        $this->fields[] = $select;
+        return $select;
+    }
+
+    /**
+     * @param string $text
+     * @return Button
+     */
+    public function button(string $text = 'Submit'): Button
+    {
+        $button = new Button(['text' => $text]);
+        $this->fields[] = $button;
+        return $button;
+    }
+
+    /**
+     * @param string $name
+     * @param array $options
+     * @return CheckboxGroup
+     */
+    public function checkbox(string $name, array $options): CheckboxGroup
+    {
+        $checkbox = new CheckboxGroup(['name' => $name, 'options' => $options]);
+        $this->fields[] = $checkbox;
+        return $checkbox;
+    }
+
+    /**
+     * @param string $name
+     * @param array $options
+     * @return RadioGroup
+     */
+    public function radio(string $name, array $options): RadioGroup
+    {
+        $radio = new RadioGroup(['name' => $name, 'options' => $options]);
+        $this->fields[] = $radio;
+        return $radio;
     }
 
     /**
